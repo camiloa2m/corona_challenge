@@ -10,7 +10,7 @@ from PIL import Image
 from pydantic import BaseModel
 
 # Carga del modelo previamente entrenado
-model = pickle.load(open("model\clf.pickle", "rb"))
+model = pickle.load(open("model/clf.pickle", "rb"))
 
 app = FastAPI()
 
