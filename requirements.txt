@@ -1,6 +1,6 @@
 fastapi
-uvicorn
 pydantic
-pickle
+uvicorn
 numpy
 pillow
+scikit-learn
