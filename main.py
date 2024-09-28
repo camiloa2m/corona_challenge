@@ -3,14 +3,14 @@ import pickle
 from io import BytesIO
 
 import numpy as np
-import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.encoders import jsonable_encoder
 from PIL import Image
 from pydantic import BaseModel
 
-# Carga del modelo previamente entrenado
-model = pickle.load(open("model/clf.pickle", "rb"))
+# Carga del modelo de clasificación previamente entrenado
+model_path = "model/clf.pickle"
+model = pickle.load(open(model_path, "rb"))
 
 app = FastAPI()
 
@@ -58,7 +58,7 @@ def predict_class(input: Input):
         img_b64 = data["subject"]["value"]
     else:
         raise HTTPException(
-            status_code=600, detail="Type field (image encoded) must be'base64'"
+            status_code=600, detail="Type field (image encoded) must be 'base64'"
         )
 
     try:
