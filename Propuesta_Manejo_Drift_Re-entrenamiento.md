@@ -24,9 +24,9 @@ Entrenar un clasificador (por ejemplo, regresión logística) para distinguir en
 
 #### A. Monitoreo de Precisión del Modelo
 
-Realizar un seguimiento de las métricas de precisión del modelo a lo largo del tiempo utilizando un conjunto de retención o datos de retroalimentación.
+Realizar un seguimiento de las métricas de precisión del modelo a lo largo del tiempo utilizando un conjunto de datos definido.
 
-* Alerta basada en umbrales: Cuando la precisión cae por debajo de un cierto umbral, marca para detectar drift.
+* **Alerta basada en umbrales:** Cuando la precisión cae por debajo de un cierto umbral, marca para detectar drift.
 
 #### B. Detección de Concept Drift
 
