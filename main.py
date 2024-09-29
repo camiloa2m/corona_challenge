@@ -3,7 +3,6 @@ import os
 import pickle
 import secrets
 from io import BytesIO
-from typing import Optional
 
 import numpy as np
 from fastapi import Depends, FastAPI, HTTPException, status
