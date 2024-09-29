@@ -1,4 +1,5 @@
 import base64
+import os
 import pickle
 import secrets
 from io import BytesIO
@@ -10,9 +11,14 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from PIL import Image
 from pydantic import BaseModel
 
+model_path = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "model", "clf.pickle"
+)
+
 # Carga del modelo de clasificación previamente entrenado
-model_path = "model/clf.pickle"
-model = pickle.load(open(model_path, "rb"))
+with open(model_path, "rb") as model_file:
+    model = pickle.load(model_file)
+
 
 app = FastAPI()
 security = HTTPBasic()  # Utilizamos seguridad básica
