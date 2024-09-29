@@ -3,6 +3,7 @@ import os
 import pickle
 import secrets
 from io import BytesIO
+from typing import Optional
 
 import numpy as np
 from fastapi import Depends, FastAPI, HTTPException, status
@@ -24,14 +25,10 @@ app = FastAPI()
 security = HTTPBasic()  # Utilizamos seguridad básica
 
 
-class SubjectModel(BaseModel):
-    type: str
-    value: str
-
-
 class Input(BaseModel):
-    subject: SubjectModel
-    subject_type: str
+    request_id: str
+    modelo: str
+    image: str
 
 
 def preprocess_image(image: Image.Image) -> np.ndarray:
@@ -91,15 +88,7 @@ def predict_class(
 ):
     data = jsonable_encoder(input)
 
-    if data["subject_type"] != "Image":
-        raise HTTPException(status_code=600, detail="Subject_type is not 'Image'")
-
-    if data["subject"]["type"] == "base64":
-        img_b64 = data["subject"]["value"]
-    else:
-        raise HTTPException(
-            status_code=600, detail="Type field (image encoded) must be 'base64'"
-        )
+    img_b64 = data["image"]
 
     try:
         img_b = BytesIO(base64.b64decode(img_b64))
@@ -109,7 +98,8 @@ def predict_class(
     try:
         image = Image.open(img_b)
         image = preprocess_image(image)
-        image_np = np.array(image).reshape((1, -1))
+        image_np = np.round((np.array(image) / 255) * 16)
+        image_np = image_np.reshape((1, -1))
     except Exception as err:
         raise HTTPException(
             status_code=602, detail=f"Error reading or preprocessing image: {err}"
